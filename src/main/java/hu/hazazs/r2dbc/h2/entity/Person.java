@@ -1,12 +1,11 @@
 package hu.hazazs.r2dbc.h2.entity;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.Id;
 
-@Entity
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
