@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS person (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(36) PRIMARY KEY,
     name VARCHAR(20),
     age INT
 );

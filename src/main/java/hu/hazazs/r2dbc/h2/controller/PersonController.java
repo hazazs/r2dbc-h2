@@ -9,7 +9,7 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +17,6 @@ public class PersonController {
 
     private final PersonRepository personRepository;
     private static final Random RANDOM = new Random();
-    private static final int NUMBER_OF_RANDOM_PEOPLE = 3;
     private static final List<String> NAMES = List.of(
                 "Tibor",
                 "Anita",
@@ -31,22 +30,16 @@ public class PersonController {
                 "Viktória"
             );
 
-    @GetMapping("/people")
+    @GetMapping("/random-person")
     @SuppressWarnings("unused")
-    public Flux<Person> getPeople() {
+    public Flux<Person> getRandomPerson() {
         return personRepository
-                .saveAll(getRandomPeople())
+                .deleteAll()
+                .then(personRepository.insertPerson(
+                        UUID.randomUUID().toString(),
+                        NAMES.get(RANDOM.nextInt(NAMES.size())),
+                        RANDOM.nextInt(111)))
                 .thenMany(personRepository.findAll());
-    }
-
-    private List<Person> getRandomPeople() {
-        return Stream
-            .generate(() -> new Person(
-                    null,
-                    NAMES.get(RANDOM.nextInt(NAMES.size())),
-                    RANDOM.nextInt(111)))
-            .limit(NUMBER_OF_RANDOM_PEOPLE)
-            .toList();
     }
 
 }

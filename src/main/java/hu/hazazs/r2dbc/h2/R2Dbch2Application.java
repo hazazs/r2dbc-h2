@@ -1,6 +1,5 @@
 package hu.hazazs.r2dbc.h2;
 
-import hu.hazazs.r2dbc.h2.entity.Person;
 import hu.hazazs.r2dbc.h2.repository.PersonRepository;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +14,7 @@ import org.springframework.web.reactive.config.EnableWebFlux;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.UUID;
 
 @SpringBootApplication
 @EnableWebFlux
@@ -40,10 +40,10 @@ public class R2Dbch2Application {
 	@SuppressWarnings("unused")
 	public CommandLineRunner init(PersonRepository personRepository) {
 		return args -> personRepository
-				.save(new Person(null, "Tibor", Period.between(
+				.insertPerson(UUID.randomUUID().toString(), "Tibor", Period.between(
 					LocalDate.of(1986, 7, 12),
 					LocalDate.now())
-						.getYears()))
+						.getYears())
 				.subscribe();
 	}
 
