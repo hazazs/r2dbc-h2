@@ -13,6 +13,9 @@ import org.springframework.r2dbc.connection.init.ConnectionFactoryInitializer;
 import org.springframework.r2dbc.connection.init.ResourceDatabasePopulator;
 import org.springframework.web.reactive.config.EnableWebFlux;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 @SpringBootApplication
 @EnableWebFlux
 @EnableR2dbcRepositories
@@ -36,10 +39,12 @@ public class R2Dbch2Application {
 	@Bean
 	@SuppressWarnings("unused")
 	public CommandLineRunner init(PersonRepository personRepository) {
-		return args ->
-			personRepository.save(new Person(null, "Tibor", 39))
-					.thenMany(personRepository.findAll())
-					.subscribe();
+		return args -> personRepository
+				.save(new Person(null, "Tibor", Period.between(
+					LocalDate.of(1986, 7, 12),
+					LocalDate.now())
+						.getYears()))
+				.subscribe();
 	}
 
 }
