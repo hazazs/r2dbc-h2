@@ -19,6 +19,7 @@ import java.util.UUID;
 @SpringBootApplication
 @EnableWebFlux
 @EnableR2dbcRepositories
+@SuppressWarnings("unused")
 public class R2Dbch2Application {
 
 	public static void main(String[] args) {
@@ -26,7 +27,6 @@ public class R2Dbch2Application {
 	}
 
 	@Bean
-	@SuppressWarnings("unused")
 	public ConnectionFactoryInitializer initializer(ConnectionFactory connectionFactory) {
 		ConnectionFactoryInitializer initializer = new ConnectionFactoryInitializer();
 
@@ -37,7 +37,6 @@ public class R2Dbch2Application {
 	}
 
 	@Bean
-	@SuppressWarnings("unused")
 	public CommandLineRunner init(PersonRepository personRepository) {
 		return args -> personRepository
 				.insertPerson(UUID.randomUUID().toString(), "Tibor", Period.between(
